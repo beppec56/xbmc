@@ -28,18 +28,18 @@
 
  special://xbmc/          - the main XBMC folder (i.e. where the app resides).
  special://home/          - a writeable version of the main XBMC folder
-                             Linux: ~/.xbmc/
+                             Linux: ~/.xbmc-fm-master/
                              OS X:  ~/Library/Application Support/XBMC/
                              Win32: ~/Application Data/XBMC/
  special://userhome/      - a writable version of the user home directory
-                             Linux, OS X: ~/.xbmc
+                             Linux, OS X: ~/.xbmc-fm-master
                              Win32: home directory of user
  special://masterprofile/ - the master users userdata folder - usually special://home/userdata
-                             Linux: ~/.xbmc/userdata/
+                             Linux: ~/.xbmc-fm-master/userdata/
                              OS X:  ~/Library/Application Support/XBMC/UserData/
                              Win32: ~/Application Data/XBMC/UserData/
  special://profile/       - the current users userdata folder - usually special://masterprofile/profiles/<current_profile>
-                             Linux: ~/.xbmc/userdata/profiles/<current_profile>
+                             Linux: ~/.xbmc-fm-master/userdata/profiles/<current_profile>
                              OS X:  ~/Library/Application Support/XBMC/UserData/profiles/<current_profile>
                              Win32: ~/Application Data/XBMC/UserData/profiles/<current_profile>
 

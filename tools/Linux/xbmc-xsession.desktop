@@ -1,6 +1,6 @@
 [Desktop Entry]
-Name=XBMC
-Comment=This session will start XBMC Media Center
-Exec=xbmc-standalone
-TryExec=xbmc-standalone
+Name=XBMC (FernetMenta master branch)
+Comment=This session will start the XBMC Media Center. Development version, FernetMenta fork, master branch.
+Exec=/opt/xbmc-fm-master/bin/xbmc-standalone
+TryExec=/opt/xbmc-fm-master/bin/xbmc-standalone
 Type=Application

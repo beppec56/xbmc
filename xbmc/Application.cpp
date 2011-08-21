@@ -1004,10 +1004,10 @@ bool CApplication::InitDirectoriesLinux()
    special://xbmc/          => [read-only] system directory (/usr/share/xbmc)
    special://home/          => [read-write] user's directory that will override special://xbmc/ system-wide
                                installations like skins, screensavers, etc.
-                               ($HOME/.xbmc)
+                               ($HOME/.xbmc-fm-master)
                                NOTE: XBMC will look in both special://xbmc/addons and special://home/addons for addons.
    special://masterprofile/ => [read-write] userdata of master profile. It will by default be
-                               mapped to special://home/userdata ($HOME/.xbmc/userdata)
+                               mapped to special://home/userdata ($HOME/.xbmc-fm-master/userdata)
    special://profile/       => [read-write] current profile's userdata directory.
                                Generally special://masterprofile for the master profile or
                                special://masterprofile/profiles/<profile_name> for other profiles.
@@ -1059,11 +1059,11 @@ bool CApplication::InitDirectoriesLinux()
     // map our special drives
     CSpecialProtocol::SetXBMCBinPath(xbmcBinPath);
     CSpecialProtocol::SetXBMCPath(xbmcPath);
-    CSpecialProtocol::SetHomePath(userHome + "/.xbmc");
-    CSpecialProtocol::SetMasterProfilePath(userHome + "/.xbmc/userdata");
+    CSpecialProtocol::SetHomePath(userHome + "/.xbmc-fm-master");
+    CSpecialProtocol::SetMasterProfilePath(userHome + "/.xbmc-fm-master/userdata");
 
     CStdString strTempPath = userHome;
-    strTempPath = URIUtils::AddFileToFolder(strTempPath, ".xbmc/temp");
+    strTempPath = URIUtils::AddFileToFolder(strTempPath, ".xbmc-fm-master/temp");
     if (getenv("XBMC_TEMP"))
       strTempPath = getenv("XBMC_TEMP");
     CSpecialProtocol::SetTempPath(strTempPath);
@@ -1148,9 +1148,9 @@ bool CApplication::InitDirectoriesOSX()
     #if defined(TARGET_DARWIN_IOS)
       CStdString strTempPath = URIUtils::AddFileToFolder(userHome,  CStdString(DarwinGetXbmcRootFolder()) + "/XBMC/temp");
     #else
-      CStdString strTempPath = URIUtils::AddFileToFolder(userHome, ".xbmc/");
+      CStdString strTempPath = URIUtils::AddFileToFolder(userHome, ".xbmc-fm-master/");
       CDirectory::Create(strTempPath);
-      strTempPath = URIUtils::AddFileToFolder(userHome, ".xbmc/temp");
+      strTempPath = URIUtils::AddFileToFolder(userHome, ".xbmc-fm-master/temp");
     #endif
     CSpecialProtocol::SetTempPath(strTempPath);
 
