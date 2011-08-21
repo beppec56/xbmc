@@ -508,8 +508,8 @@ install-scripts:
 	@install -d $(DESTDIR)$(datarootdir)/@APP_NAME_LC@
 	@cd $(DESTDIR)$(datarootdir); [ -L xbmc ] || [ -d xbmc ] || ln -s @APP_NAME_LC@ xbmc
 	@install -d $(DESTDIR)$(datarootdir)/xsessions
-	@install -m 0644 tools/Linux/@APP_NAME_LC@-xsession.desktop $(DESTDIR)$(datarootdir)/xsessions/@APP_NAME_LC@.desktop
-	@cd $(DESTDIR)$(datarootdir)/xsessions; [ -L xbmc.desktop ] || [ -f xbmc.desktop ] || ln -s @APP_NAME_LC@.desktop xbmc.desktop
+	@install -m 0644 tools/Linux/@APP_NAME_LC@-xsession.desktop $(DESTDIR)$(datarootdir)/xsessions/@APP_NAME_LC@-FernetMenta-master.desktop
+	@cd $(DESTDIR)$(datarootdir)/xsessions; [ -L xbmc.desktop ] || [ -f xbmc.desktop ] || ln -s @APP_NAME_LC@-FernetMenta-master.desktop xbmc.desktop
 
 install-datas: install-scripts
 	@echo "Copying support and legal files..."
@@ -581,7 +581,7 @@ uninstall:
 	@rm -rf $(DESTDIR)$(libdir)/@APP_NAME_LC@
 	@rm -rf $(DESTDIR)$(datarootdir)/@APP_NAME_LC@ $(DESTDIR)$(bindir)/@APP_NAME_LC@
 	@rm -rf $(DESTDIR)$(bindir)/@APP_NAME_LC@-standalone
-	@rm -rf $(DESTDIR)$(datarootdir)/xsessions/@APP_NAME_LC@.desktop
+	@rm -rf $(DESTDIR)$(datarootdir)/xsessions/@APP_NAME_LC@-FernetMenta-master.desktop
 	@rm -rf $(libdir)/lib@APP_NAME_LC@_*
 	@rm -rf $(prefix)/include/@APP_NAME_LC@
 	@echo "Done!"

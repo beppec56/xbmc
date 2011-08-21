@@ -28,18 +28,19 @@
 
  special://xbmc/          - the main XBMC folder (i.e. where the app resides).
  special://home/          - a writeable version of the main XBMC folder
-                             Linux: ~/.kodi/
+<<<<<<< HEAD
+                             Linux: ~/.kodi-fm-master/
                              OS X:  ~/Library/Application Support/Kodi/
                              Win32: ~/Application Data/XBMC/
  special://userhome/      - a writable version of the user home directory
-                             Linux, OS X: ~/.kodi
+                             Linux, OS X: ~/.kodi-fm-master
                              Win32: home directory of user
  special://masterprofile/ - the master users userdata folder - usually special://home/userdata
-                             Linux: ~/.kodi/userdata/
+                             Linux: ~/.kodi-fm-master/userdata/
                              OS X:  ~/Library/Application Support/Kodi/UserData/
                              Win32: ~/Application Data/XBMC/UserData/
  special://profile/       - the current users userdata folder - usually special://masterprofile/profiles/<current_profile>
-                             Linux: ~/.kodi/userdata/profiles/<current_profile>
+                             Linux: ~/.kodi-fm-master/userdata/profiles/<current_profile>
                              OS X:  ~/Library/Application Support/Kodi/UserData/profiles/<current_profile>
                              Win32: ~/Application Data/XBMC/UserData/profiles/<current_profile>
 

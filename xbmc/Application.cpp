@@ -868,10 +868,10 @@ bool CApplication::InitDirectoriesLinux()
    special://xbmc/          => [read-only] system directory (/usr/share/kodi)
    special://home/          => [read-write] user's directory that will override special://kodi/ system-wide
                                installations like skins, screensavers, etc.
-                               ($HOME/.kodi)
+                               ($HOME/.kodi-fm-master)
                                NOTE: XBMC will look in both special://xbmc/addons and special://home/addons for addons.
    special://masterprofile/ => [read-write] userdata of master profile. It will by default be
-                               mapped to special://home/userdata ($HOME/.kodi/userdata)
+                               mapped to special://home/userdata ($HOME/.kodi/fm-master/userdata)
    special://profile/       => [read-write] current profile's userdata directory.
                                Generally special://masterprofile for the master profile or
                                special://masterprofile/profiles/<profile_name> for other profiles.
@@ -930,11 +930,11 @@ bool CApplication::InitDirectoriesLinux()
     // map our special drives
     CSpecialProtocol::SetXBMCBinPath(appBinPath);
     CSpecialProtocol::SetXBMCPath(appPath);
-    CSpecialProtocol::SetHomePath(userHome + "/" + dotLowerAppName);
-    CSpecialProtocol::SetMasterProfilePath(userHome + "/" + dotLowerAppName + "/userdata");
+    CSpecialProtocol::SetHomePath(userHome + "/" + dotLowerAppName +"-fm-master");
+    CSpecialProtocol::SetMasterProfilePath(userHome + "/" + dotLowerAppName + "-fm-master/userdata");
 
     std::string strTempPath = userHome;
-    strTempPath = URIUtils::AddFileToFolder(strTempPath, dotLowerAppName + "/temp");
+    strTempPath = URIUtils::AddFileToFolder(strTempPath, dotLowerAppName + "-fm-master/temp");
     if (getenv(envAppTemp))
       strTempPath = getenv(envAppTemp);
     CSpecialProtocol::SetTempPath(strTempPath);
@@ -1023,9 +1023,9 @@ bool CApplication::InitDirectoriesOSX()
     #if defined(TARGET_DARWIN_IOS)
       std::string strTempPath = URIUtils::AddFileToFolder(userHome,  std::string(CDarwinUtils::GetAppRootFolder()) + "/" + appName + "/temp");
     #else
-      std::string strTempPath = URIUtils::AddFileToFolder(userHome, dotLowerAppName + "/");
+      std::string strTempPath = URIUtils::AddFileToFolder(userHome, dotLowerAppName + "-fm-master/");
       CDirectory::Create(strTempPath);
-      strTempPath = URIUtils::AddFileToFolder(userHome, dotLowerAppName + "/temp");
+      strTempPath = URIUtils::AddFileToFolder(userHome, dotLowerAppName + "-fm-master/temp");
     #endif
     CSpecialProtocol::SetTempPath(strTempPath);
 
