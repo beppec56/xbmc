@@ -373,9 +373,9 @@
 			</control>
 			<control type="label" id="10">
 				<description>row 1 label</description>
-				<left>50</left>
-				<top>10</top>
-				<width>1180</width>
+				<posx>10</posx>
+				<posy>10</posy>
+				<width>1260</width>
 				<height>30</height>
 				<align>left</align>
 				<aligny>center</aligny>
@@ -384,9 +384,9 @@
 			</control>
 			<control type="label" id="11">
 				<description>row 2 label</description>
-				<left>50</left>
-				<top>55</top>
-				<width>1180</width>
+				<posx>10</posx>
+				<posy>40</posy>
+				<width>1260</width>
 				<height>30</height>
 				<align>left</align>
 				<aligny>center</aligny>
@@ -398,6 +398,9 @@
 				<left>50</left>
 				<top>100</top>
 				<width>1180</width>
+				<posx>10</posx>
+				<posy>85</posy>
+				<width>1260</width>
 				<height>30</height>
 				<align>left</align>
 				<aligny>center</aligny>
