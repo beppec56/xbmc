@@ -42,6 +42,7 @@ public:
 
   inline double GetBitrate()    const { return m_dBitrate; }
   inline double GetMaxBitrate() const { return m_dMaxBitrate; }
+  inline void   ResetMaxBitrate() { m_dMaxBitrate = 0; }
   inline double GetMinBitrate() const { return m_dMinBitrate; }
 
   void Start();

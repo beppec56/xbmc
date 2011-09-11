@@ -368,13 +368,14 @@
 				<left>0</left>
 				<top>0</top>
 				<width>1280</width>
-				<height>155</height>
+				<height>165</height>
 				<texture>black-back.png</texture>
 			</control>
 			<control type="label" id="10">
+			  <!-- audio, two strings -->
 				<description>row 1 label</description>
-				<left>50</left>
-				<top>10</top>
+				<posx>50</posx>
+				<posy>10</posy>
 				<width>1180</width>
 				<height>30</height>
 				<align>left</align>
@@ -383,22 +384,24 @@
 				<label>-</label>
 			</control>
 			<control type="label" id="11">
+			  <!-- picture, two strings -->
 				<description>row 2 label</description>
-				<left>50</left>
-				<top>55</top>
+				<posx>50</posx>
+				<posy>50</posy>
 				<width>1180</width>
-				<height>30</height>
+				<height>40</height>
 				<align>left</align>
 				<aligny>center</aligny>
 				<font>font12</font>
 				<label>-</label>
 			</control>
 			<control type="label" id="12">
+			  <!-- timing, three strings -->
 				<description>row 3 label</description>
-				<left>50</left>
-				<top>100</top>
+				<posx>50</posx>
+				<posy>95</posy>
 				<width>1180</width>
-				<height>45</height>
+				<height>55</height>
 				<align>left</align>
 				<aligny>center</aligny>
 				<font>font12</font>
