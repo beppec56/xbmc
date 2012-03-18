@@ -105,6 +105,7 @@ public:
 
   bool SeekChapter(int chapter, double* startpts = NULL);
   int GetChapterCount();
+  void SetPlayerDts(double CurrentDts) { m_iPlayerCurrentDts = CurrentDts; }
   int GetChapter();
   void GetChapterName(std::string& strChapterName);
   virtual void GetStreamCodecName(int iStreamId, CStdString &strName);
@@ -134,6 +135,7 @@ protected:
   DllAvCodec  m_dllAvCodec;
   DllAvUtil   m_dllAvUtil;
 
+  double   m_iPlayerCurrentDts; // used to compute the right chapter number
   double   m_iCurrentPts; // used for stream length estimation
   bool     m_bMatroska;
   bool     m_bAVI;

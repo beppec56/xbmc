@@ -208,6 +208,7 @@ CDVDDemuxFFmpeg::CDVDDemuxFFmpeg() : CDVDDemux()
   m_pFormatContext = NULL;
   m_pInput = NULL;
   m_ioContext = NULL;
+  SetPlayerDts(0);
   for (int i = 0; i < MAX_STREAMS; i++) m_streams[i] = NULL;
   m_iCurrentPts = DVD_NOPTS_VALUE;
   m_bMatroska = false;
@@ -235,6 +236,7 @@ bool CDVDDemuxFFmpeg::Open(CDVDInputStream* pInput)
   AVInputFormat* iformat = NULL;
   std::string strFile;
   m_iCurrentPts = DVD_NOPTS_VALUE;
+  SetPlayerDts(0);
   m_speed = DVD_PLAYSPEED_NORMAL;
   g_demuxer.set(this);
   m_program = UINT_MAX;
@@ -1395,16 +1397,15 @@ int CDVDDemuxFFmpeg::GetChapter()
   if(ich)
     return ich->GetChapter();
 
-  if(m_pFormatContext == NULL
-  || m_iCurrentPts == DVD_NOPTS_VALUE)
+  if(m_pFormatContext == NULL)
     return 0;
 
   #if LIBAVFORMAT_VERSION_INT >= AV_VERSION_INT(52,14,0)
     for(unsigned i = 0; i < m_pFormatContext->nb_chapters; i++)
     {
       AVChapter *chapter = m_pFormatContext->chapters[i];
-      if(m_iCurrentPts >= ConvertTimestamp(chapter->start, chapter->time_base.den, chapter->time_base.num)
-      && m_iCurrentPts <  ConvertTimestamp(chapter->end,   chapter->time_base.den, chapter->time_base.num))
+      if(m_iPlayerCurrentDts >= ConvertTimestamp(chapter->start, chapter->time_base.den, chapter->time_base.num)
+      && m_iPlayerCurrentDts <  ConvertTimestamp(chapter->end,   chapter->time_base.den, chapter->time_base.num))
         return i + 1;
     }
   #endif
