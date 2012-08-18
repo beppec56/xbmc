@@ -1,0 +1,119 @@
+From c8c431ff6917a575575daed026f8d917fc35e98c Mon Sep 17 00:00:00 2001
+From: Giuseppe Castagno <giuseppe.castagno@acca-esse.eu>
+Date: Sun, 18 Mar 2012 16:39:43 +0100
+Subject: [PATCH 4/4] Change the computing of the chapter time position from
+ muxer playtime to the video playtime.
+
+This change takes into account the delay from the muxer time and the time the player is actually on.
+---
+ xbmc/cores/dvdplayer/DVDDemuxers/DVDDemux.h        |    6 ++++++
+ .../cores/dvdplayer/DVDDemuxers/DVDDemuxFFmpeg.cpp |    9 +++++----
+ xbmc/cores/dvdplayer/DVDDemuxers/DVDDemuxFFmpeg.h  |    2 ++
+ xbmc/cores/dvdplayer/DVDPlayer.cpp                 |    4 ++++
+ 4 files changed, 17 insertions(+), 4 deletions(-)
+
+diff --git a/xbmc/cores/dvdplayer/DVDDemuxers/DVDDemux.h b/xbmc/cores/dvdplayer/DVDDemuxers/DVDDemux.h
+index 2642a81..550c791 100644
+--- a/xbmc/cores/dvdplayer/DVDDemuxers/DVDDemux.h
++++ b/xbmc/cores/dvdplayer/DVDDemuxers/DVDDemux.h
+@@ -264,9 +264,15 @@ public:
+   /*
+    * Get the number of chapters available
+    */
++
+   virtual int GetChapterCount() { return 0; }
+ 
+   /*
++   * Set the playing time to get the correct current chapter
++   */
++  virtual void SetPlayerDts(double CurrentDts) {  }
++
++  /*
+    * Get current chapter
+    */
+   virtual int GetChapter() { return 0; }
+diff --git a/xbmc/cores/dvdplayer/DVDDemuxers/DVDDemuxFFmpeg.cpp b/xbmc/cores/dvdplayer/DVDDemuxers/DVDDemuxFFmpeg.cpp
+index 423d9f8..e266bee 100644
+--- a/xbmc/cores/dvdplayer/DVDDemuxers/DVDDemuxFFmpeg.cpp
++++ b/xbmc/cores/dvdplayer/DVDDemuxers/DVDDemuxFFmpeg.cpp
+@@ -207,6 +207,7 @@ CDVDDemuxFFmpeg::CDVDDemuxFFmpeg() : CDVDDemux()
+   m_pFormatContext = NULL;
+   m_pInput = NULL;
+   m_ioContext = NULL;
++  SetPlayerDts(0);
+   for (int i = 0; i < MAX_STREAMS; i++) m_streams[i] = NULL;
+   m_iCurrentPts = DVD_NOPTS_VALUE;
+ }
+@@ -230,6 +231,7 @@ bool CDVDDemuxFFmpeg::Open(CDVDInputStream* pInput)
+   AVInputFormat* iformat = NULL;
+   std::string strFile;
+   m_iCurrentPts = DVD_NOPTS_VALUE;
++  SetPlayerDts(0);
+   m_speed = DVD_PLAYSPEED_NORMAL;
+   g_demuxer.set(this);
+   m_program = UINT_MAX;
+@@ -1214,16 +1216,15 @@ int CDVDDemuxFFmpeg::GetChapter()
+   if(ich)
+     return ich->GetChapter();
+ 
+-  if(m_pFormatContext == NULL
+-  || m_iCurrentPts == DVD_NOPTS_VALUE)
++  if(m_pFormatContext == NULL)
+     return 0;
+ 
+   #if LIBAVFORMAT_VERSION_INT >= AV_VERSION_INT(52,14,0)
+     for(unsigned i = 0; i < m_pFormatContext->nb_chapters; i++)
+     {
+       AVChapter *chapter = m_pFormatContext->chapters[i];
+-      if(m_iCurrentPts >= ConvertTimestamp(chapter->start, chapter->time_base.den, chapter->time_base.num)
+-      && m_iCurrentPts <  ConvertTimestamp(chapter->end,   chapter->time_base.den, chapter->time_base.num))
++      if(m_iPlayerCurrentDts >= ConvertTimestamp(chapter->start, chapter->time_base.den, chapter->time_base.num)
++      && m_iPlayerCurrentDts <  ConvertTimestamp(chapter->end,   chapter->time_base.den, chapter->time_base.num))
+         return i + 1;
+     }
+   #endif
+diff --git a/xbmc/cores/dvdplayer/DVDDemuxers/DVDDemuxFFmpeg.h b/xbmc/cores/dvdplayer/DVDDemuxers/DVDDemuxFFmpeg.h
+index 018d9b3..50d0cd4 100644
+--- a/xbmc/cores/dvdplayer/DVDDemuxers/DVDDemuxFFmpeg.h
++++ b/xbmc/cores/dvdplayer/DVDDemuxers/DVDDemuxFFmpeg.h
+@@ -105,6 +105,7 @@ public:
+ 
+   bool SeekChapter(int chapter, double* startpts = NULL);
+   int GetChapterCount();
++  void SetPlayerDts(double CurrentDts) { m_iPlayerCurrentDts = CurrentDts; }
+   int GetChapter();
+   void GetChapterName(std::string& strChapterName);
+   virtual void GetStreamCodecName(int iStreamId, CStdString &strName);
+@@ -134,6 +135,7 @@ protected:
+   DllAvCodec  m_dllAvCodec;
+   DllAvUtil   m_dllAvUtil;
+ 
++  double   m_iPlayerCurrentDts; // used to compute the right chapter number
+   double   m_iCurrentPts; // used for stream length estimation
+   bool     m_bMatroska;
+   bool     m_bAVI;
+diff --git a/xbmc/cores/dvdplayer/DVDPlayer.cpp b/xbmc/cores/dvdplayer/DVDPlayer.cpp
+index 2dd880e..6eb57ed 100644
+--- a/xbmc/cores/dvdplayer/DVDPlayer.cpp
++++ b/xbmc/cores/dvdplayer/DVDPlayer.cpp
+@@ -2092,6 +2092,9 @@ void CDVDPlayer::HandleMessages()
+       {
+         CDVDMsgPlayerSeek &msg(*((CDVDMsgPlayerSeek*)pMsg));
+ 
++//needed here to do a correct seek to a chapter
++        if(m_pDemuxer)  m_pDemuxer->SetPlayerDts( DVD_MSEC_TO_TIME( GetTime() ) );
++
+         if(!msg.GetTrickPlay())
+         {
+           g_infoManager.SetDisplayAfterSeek(100000);
+@@ -3857,6 +3860,7 @@ void CDVDPlayer::UpdatePlayState(double timeout)
+ 
+   if(m_pDemuxer)
+   {
++    m_pDemuxer->SetPlayerDts( DVD_MSEC_TO_TIME( GetTime() ) );
+     state.chapter       = m_pDemuxer->GetChapter();
+     state.chapter_count = m_pDemuxer->GetChapterCount();
+     m_pDemuxer->GetChapterName(state.chapter_name);
+-- 
+1.7.5.4
+
