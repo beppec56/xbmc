@@ -1,0 +1,30 @@
+From 60b5496c9c129ded2f6f21a08c77a4e50133cb8b Mon Sep 17 00:00:00 2001
+From: Giuseppe Castagno <giuseppe.castagno@acca-esse.eu>
+Date: Fri, 26 Aug 2011 10:23:40 +0200
+Subject: [PATCH 2/4] Run xbmc at a higher priority
+
+With this change the entire application is 'niced' up two levels.
+
+You need to modify the file /etc/security/limits.conf by adding a line at the end:
+
+    xbmc             -       nice            -15
+---
+ tools/Linux/xbmc-standalone.sh.in |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/tools/Linux/xbmc-standalone.sh.in b/tools/Linux/xbmc-standalone.sh.in
+index 680f19a..0dc9cad 100644
+--- a/tools/Linux/xbmc-standalone.sh.in
++++ b/tools/Linux/xbmc-standalone.sh.in
+@@ -21,7 +21,7 @@
+ prefix="@prefix@"
+ exec_prefix="@exec_prefix@"
+ bindir="@bindir@"
+-XBMC="${bindir}/xbmc --standalone $@"
++XBMC="nice --2 ${bindir}/xbmc --standalone $@"
+ 
+ @XBMC_STANDALONE_SH_PULSE@
+ 
+-- 
+1.7.5.4
+
