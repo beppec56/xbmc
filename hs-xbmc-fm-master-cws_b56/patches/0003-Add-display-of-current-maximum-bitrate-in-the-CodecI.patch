@@ -1,0 +1,106 @@
+From 8acb7d17f72e3f5c458c5896f662e55413e67325 Mon Sep 17 00:00:00 2001
+From: Giuseppe Castagno <giuseppe.castagno@acca-esse.eu>
+Date: Sun, 11 Sep 2011 11:06:31 +0200
+Subject: [PATCH 3/4] Add display of current maximum bitrate in the
+ 'CodecInfo' overlay window.
+
+Fixed the max bit rate value reset at the end of play.
+Enlarged the size of the Confluence skin codec information window to accomodate the new information.
+Added a log at the end of play printing some information about codec dropped frames behavior.
+
+Conflicts:
+
+	xbmc/cores/dvdplayer/DVDPlayerVideo.cpp
+---
+ addons/skin.confluence/720p/VideoFullScreen.xml |   12 ++++++------
+ xbmc/cores/dvdplayer/DVDPlayerVideo.cpp         |   14 ++++++++++----
+ xbmc/utils/BitstreamStats.h                     |    1 +
+ 3 files changed, 17 insertions(+), 10 deletions(-)
+
+diff --git a/addons/skin.confluence/720p/VideoFullScreen.xml b/addons/skin.confluence/720p/VideoFullScreen.xml
+index 703d424..59104a4 100644
+--- a/addons/skin.confluence/720p/VideoFullScreen.xml
++++ b/addons/skin.confluence/720p/VideoFullScreen.xml
+@@ -303,9 +303,9 @@
+ 			</control>
+ 			<control type="label" id="10">
+ 				<description>row 1 label</description>
+-				<posx>50</posx>
++				<posx>10</posx>
+ 				<posy>10</posy>
+-				<width>1180</width>
++				<width>1260</width>
+ 				<height>30</height>
+ 				<align>left</align>
+ 				<aligny>center</aligny>
+@@ -314,9 +314,9 @@
+ 			</control>
+ 			<control type="label" id="11">
+ 				<description>row 2 label</description>
+-				<posx>50</posx>
++				<posx>10</posx>
+ 				<posy>40</posy>
+-				<width>1180</width>
++				<width>1260</width>
+ 				<height>30</height>
+ 				<align>left</align>
+ 				<aligny>center</aligny>
+@@ -325,9 +325,9 @@
+ 			</control>
+ 			<control type="label" id="12">
+ 				<description>row 3 label</description>
+-				<posx>50</posx>
++				<posx>10</posx>
+ 				<posy>85</posy>
+-				<width>1180</width>
++				<width>1260</width>
+ 				<height>30</height>
+ 				<align>left</align>
+ 				<aligny>center</aligny>
+diff --git a/xbmc/cores/dvdplayer/DVDPlayerVideo.cpp b/xbmc/cores/dvdplayer/DVDPlayerVideo.cpp
+index 4c031a4..5333b17 100644
+--- a/xbmc/cores/dvdplayer/DVDPlayerVideo.cpp
++++ b/xbmc/cores/dvdplayer/DVDPlayerVideo.cpp
+@@ -784,6 +784,11 @@ void CDVDPlayerVideo::Process()
+ 
+   // we need to let decoder release any picture retained resources.
+   m_pVideoCodec->ClearPicture(&picture);
++ //log max bitrate obtained
++  CLog::Log(LOGNOTICE, "%s.%s:%d - Max bitrate: %2.2f Mb/s Dropped %d",
++             __FILE__, __FUNCTION__, __LINE__,
++            m_videoStats.GetMaxBitrate() / (1024.0*1024.0), m_iDroppedFrames);
++  m_videoStats.ResetMaxBitrate();
+ }
+ 
+ void CDVDPlayerVideo::OnExit()
+@@ -1522,10 +1527,11 @@ std::string CDVDPlayerVideo::GetPlayerInfo()
+ {
+   std::ostringstream s;
+   s << "fr:"     << fixed << setprecision(3) << m_fFrameRate;
+-  s << ", vq:"   << setw(2) << min(99,m_messageQueue.GetLevel()) << "%";
+-  s << ", dc:"   << m_codecname;
+-  s << ", Mb/s:" << fixed << setprecision(2) << (double)GetVideoBitrate() / (1024.0*1024.0);
+-  s << ", drop:" << m_iDroppedFrames;
++  s << " vq:"   << setw(2) << min(99,m_messageQueue.GetLevel()) << "%";
++  s << " dc:"   << m_codecname;
++  s << " Mb/s:" << setw(5) << fixed << setprecision(2) << (double)GetVideoBitrate() / (1024.0*1024.0);
++  s << "<"      << setw(5) << fixed << setprecision(2) << m_videoStats.GetMaxBitrate() / (1024.0*1024.0);
++  s << " drop:" << m_iDroppedFrames;
+ 
+   int pc = m_pullupCorrection.GetPatternLength();
+   if (pc > 0)
+diff --git a/xbmc/utils/BitstreamStats.h b/xbmc/utils/BitstreamStats.h
+index 3f1e8b2..9bad033 100644
+--- a/xbmc/utils/BitstreamStats.h
++++ b/xbmc/utils/BitstreamStats.h
+@@ -41,6 +41,7 @@ public:
+ 
+   inline double GetBitrate()    const { return m_dBitrate; }
+   inline double GetMaxBitrate() const { return m_dMaxBitrate; }
++  inline void   ResetMaxBitrate() { m_dMaxBitrate = 0; }
+   inline double GetMinBitrate() const { return m_dMinBitrate; }
+ 
+   void Start();
+-- 
+1.7.5.4
+

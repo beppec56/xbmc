@@ -1,0 +1,238 @@
+;; -*- mode: emacs-lisp; coding: emacs-mule; -*-
+;; --------------------------------------------------------------------------
+;; Desktop File for Emacs
+;; --------------------------------------------------------------------------
+;; Created Sat Sep 22 14:51:01 2012
+;; Desktop file format version 206
+;; Emacs version 23.3.1
+
+;; Global section:
+(setq desktop-missing-file-warning nil)
+(setq tags-file-name nil)
+(setq tags-table-list nil)
+(setq search-ring '("fade" "media-player" "media" "srv4" "backend" "master" "QTLIB" "qt_libdirs" "lib_dir" "Qt4 li" "QT4 lib" "2" "psy" "CreateGui" ".sh	\"07\" \"amy's choice\"					\"02\" \"20070\"" "handle"))
+(setq regexp-search-ring nil)
+(setq register-alist (list (list 3 "Unprintable entity" (let ((mk (make-marker))) (add-hook 'desktop-delay-hook (list 'lambda '() (list 'set-marker mk nil (get-buffer " *temp*")))) mk))))
+(setq file-name-history '("/srv5/git/" "/srv5/git/xbmc/xbmc-fm-beppe/hs-xbmc-fm-master-cws_b56/" "/srv5/git/xbmc/xbmc-fm-beppe/" "/srv5/git/OpenELEC.tv/beppe-OpenELEC.tv/patches/xbmc-frodo-pvr-210e8ca.patch/tools/TexturePacker/" "/srv5/git/OpenELEC.tv/beppe-OpenELEC.tv/patches/xbmc-frodo-pvr-210e8ca.patch/lib/libsquish/" "/srv5/git/OpenELEC.tv/beppe-OpenELEC.tv/patches/xbmc-frodo-pvr-210e8ca.patch/tools/TexturePacker/Makefile.in" "/srv5/git/OpenELEC.tv/beppe-OpenELEC.tv/patches/xbmc-frodo-pvr-210e8ca.patch/tools/TexturePacker/" "/srv5/git/OpenELEC.tv/beppe-OpenELEC.tv/patches/old/" "~/aoo-b/aoo-git-svn-master-from-trunk/main/binfilter/bf_so3/source/misc/" "~/aoo-b/aoo-git-svn-master-from-trunk" "/etc/" "~"))
+
+;; Buffer section -- buffers listed in same order as in buffer list:
+(desktop-create-buffer 206
+  "/srv5/git/xbmc/xbmc-fm-beppe/addons/skin.confluence/720p/VideoFullScreen.xml"
+  "VideoFullScreen.xml"
+  'nxml-mode
+  nil
+  510
+  '(2123 nil)
+  nil
+  nil
+  '((buffer-file-coding-system . utf-8-unix)))
+
+(desktop-create-buffer 206
+  nil
+  "720p"
+  'dired-mode
+  nil
+  6069
+  '(nil nil)
+  t
+  '("/srv5/git/xbmc/xbmc-fm-beppe/addons/skin.confluence/720p/")
+  nil)
+
+(desktop-create-buffer 206
+  nil
+  "skin.confluence"
+  'dired-mode
+  nil
+  252
+  '(nil nil)
+  t
+  '("/srv5/git/xbmc/xbmc-fm-beppe/addons/skin.confluence/")
+  nil)
+
+(desktop-create-buffer 206
+  nil
+  "addons"
+  'dired-mode
+  nil
+  2410
+  '(nil nil)
+  t
+  '("/srv5/git/xbmc/xbmc-fm-beppe/addons/")
+  nil)
+
+(desktop-create-buffer 206
+  nil
+  "xbmc-fm-beppe"
+  'dired-mode
+  nil
+  409
+  '(nil nil)
+  t
+  '("/srv5/git/xbmc/xbmc-fm-beppe/")
+  nil)
+
+(desktop-create-buffer 206
+  "/srv5/git/OpenELEC.tv/beppe-OpenELEC.tv/beppe-tools/git-clone-github-beppec56-openelec.tv.sh"
+  "git-clone-github-beppec56-openelec.tv.sh"
+  'sh-mode
+  nil
+  1405
+  '(998 nil)
+  nil
+  nil
+  '((buffer-file-coding-system . utf-8-unix)))
+
+(desktop-create-buffer 206
+  "/srv5/git/xbmc/xbmc-fm-beppe/hs-xbmc-fm-master-cws_b56/git-clone-github-beppec56-xbmc.sh"
+  "git-clone-github-beppec56-xbmc.sh"
+  'sh-mode
+  nil
+  1223
+  '(1054 nil)
+  nil
+  nil
+  '((buffer-file-coding-system . utf-8-unix)))
+
+(desktop-create-buffer 206
+  nil
+  "beppe-tools"
+  'dired-mode
+  nil
+  242
+  '(nil nil)
+  t
+  '("/srv5/git/OpenELEC.tv/beppe-OpenELEC.tv/beppe-tools/")
+  nil)
+
+(desktop-create-buffer 206
+  nil
+  "beppe-OpenELEC.tv"
+  'dired-mode
+  nil
+  237
+  '(nil nil)
+  t
+  '("/srv5/git/OpenELEC.tv/beppe-OpenELEC.tv/")
+  nil)
+
+(desktop-create-buffer 206
+  nil
+  "OpenELEC.tv"
+  'dired-mode
+  nil
+  368
+  '(nil nil)
+  t
+  '("/srv5/git/OpenELEC.tv/")
+  nil)
+
+(desktop-create-buffer 206
+  nil
+  "git"
+  'dired-mode
+  nil
+  623
+  '(nil nil)
+  t
+  '("/srv5/git/")
+  nil)
+
+(desktop-create-buffer 206
+  nil
+  "hs-xbmc-fm-master-cws_b56"
+  'dired-mode
+  nil
+  459
+  '(nil nil)
+  t
+  '("/srv5/git/xbmc/xbmc-fm-beppe/hs-xbmc-fm-master-cws_b56/")
+  nil)
+
+(desktop-create-buffer 206
+  nil
+  "xbmc"
+  'dired-mode
+  nil
+  2121
+  '(nil nil)
+  t
+  '("/srv5/git/xbmc/")
+  nil)
+
+(desktop-create-buffer 206
+  "/srv5/git/xbmc/xbmc-fm-beppe/configure.in"
+  "configure.in"
+  'autoconf-mode
+  nil
+  2895
+  '(nil nil)
+  nil
+  nil
+  '((buffer-file-coding-system . undecided-unix)))
+
+(desktop-create-buffer 206
+  nil
+  "bf_so3"
+  'dired-mode
+  nil
+  217
+  '(nil nil)
+  t
+  '("/home/beppe/aoo-b/aoo-git-svn-master-from-trunk/main/binfilter/bf_so3/")
+  nil)
+
+(desktop-create-buffer 206
+  nil
+  "inc"
+  'dired-mode
+  nil
+  219
+  '(nil nil)
+  t
+  '("/home/beppe/aoo-b/aoo-git-svn-master-from-trunk/main/binfilter/bf_so3/inc/")
+  nil)
+
+(desktop-create-buffer 206
+  nil
+  "source"
+  'dired-mode
+  nil
+  224
+  '(nil nil)
+  t
+  '("/home/beppe/aoo-b/aoo-git-svn-master-from-trunk/main/binfilter/bf_so3/source/")
+  nil)
+
+(desktop-create-buffer 206
+  nil
+  "misc"
+  'dired-mode
+  nil
+  231
+  '(nil nil)
+  t
+  '("/home/beppe/aoo-b/aoo-git-svn-master-from-trunk/main/binfilter/bf_so3/source/misc/")
+  nil)
+
+(desktop-create-buffer 206
+  "/home/beppe/aoo-b/aoo-git-svn-master-from-trunk/main/binfilter/bf_so3/source/misc/factory.cxx"
+  "factory.cxx"
+  'c++-mode
+  '(abbrev-mode)
+  1
+  '(nil nil)
+  nil
+  nil
+  '((tab-width . 4) (indent-tabs-mode) (buffer-file-coding-system . undecided-unix)))
+
+(desktop-create-buffer 206
+  nil
+  "dvdrip-data"
+  'dired-mode
+  nil
+  1271
+  '(nil nil)
+  t
+  '("/srv3/dvdrip-data/")
+  nil)
+
