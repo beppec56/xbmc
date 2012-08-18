@@ -1,0 +1,149 @@
+From 52e7cd95c9904d5e0c7ecc51c62a7734e171ad22 Mon Sep 17 00:00:00 2001
+From: Giuseppe Castagno <giuseppe.castagno@acca-esse.eu>
+Date: Sun, 21 Aug 2011 11:52:46 +0200
+Subject: [PATCH 1/4] Change installation path, session name and xbmc user
+ directory name.
+
+This patch changes the installation path (hardcoded) to /opt/xbmc-fm-master
+adds a new session named XBMC FernetMenta Output to start the application,
+in order to coexist with the packaged ad supposed stable version.
+
+It changes the xbmc user working directory from .xbmc to .xbmc-fm-master
+(Linux only), so to have a different configuration for the development
+FernetMenta repository (branch master), with my patches.
+
+Conflicts:
+
+	xbmc/Application.cpp
+---
+ Makefile.in                       |    5 +++--
+ tools/Linux/xbmc-xsession.desktop |    8 ++++----
+ tools/Linux/xbmc.desktop          |    2 +-
+ xbmc/Application.cpp              |   14 +++++++-------
+ xbmc/filesystem/SpecialProtocol.h |    8 ++++----
+ 5 files changed, 19 insertions(+), 18 deletions(-)
+
+diff --git a/Makefile.in b/Makefile.in
+index cc2e9a6..e9aa62b 100755
+--- a/Makefile.in
++++ b/Makefile.in
+@@ -421,7 +421,8 @@ install-scripts:
+ 	@install -d $(DESTDIR)$(datarootdir)/xbmc
+ 	@install -m 0644 tools/Linux/FEH.py $(DESTDIR)$(datarootdir)/xbmc/FEH.py
+ 	@install -d $(DESTDIR)$(datarootdir)/xsessions
+-	@install -m 0644 tools/Linux/xbmc-xsession.desktop $(DESTDIR)$(datarootdir)/xsessions/XBMC.desktop
++	@install -m 0644 tools/Linux/xbmc-xsession.desktop $(DESTDIR)$(datarootdir)/xsessions/XBMC-FernetMenta-master.desktop
++	@install -D -m 0644 tools/Linux/xbmc-xsession.desktop /usr/share/xsessions/XBMC-FernetMenta-master.desktop
+ 
+ install-datas: install-scripts
+ 	@echo "Copying support and legal files..."
+@@ -457,7 +458,7 @@ uninstall:
+ 	@rm -rf $(DESTDIR)$(libdir)/xbmc
+ 	@rm -rf $(DESTDIR)$(datarootdir)/xbmc $(DESTDIR)$(bindir)/xbmc
+ 	@rm -rf $(DESTDIR)$(bindir)/xbmc-standalone
+-	@rm -rf $(DESTDIR)$(datarootdir)/xsessions/XBMC.desktop
++	@rm -rf $(DESTDIR)$(datarootdir)/xsessions/XBMC-FernetMenta-master.desktop
+ 	@rm -rf $(libdir)/libXBMC_*
+ 	@rm -rf $(prefix)/include/xbmc
+ 	@echo "Done!"
+diff --git a/tools/Linux/xbmc-xsession.desktop b/tools/Linux/xbmc-xsession.desktop
+index 6455dfe..440fc66 100644
+--- a/tools/Linux/xbmc-xsession.desktop
++++ b/tools/Linux/xbmc-xsession.desktop
+@@ -1,6 +1,6 @@
+ [Desktop Entry]
+-Name=XBMC
+-Comment=This session will start XBMC Media Center
+-Exec=xbmc-standalone
+-TryExec=xbmc-standalone
++Name=XBMC (FernetMenta master branch)
++Comment=This session will start the XBMC Media Center. Development version, FernetMenta fork, master branch.
++Exec=/opt/xbmc-fm-master/bin/xbmc-standalone
++TryExec=/opt/xbmc-fm-master/bin/xbmc-standalone
+ Type=Application
+diff --git a/tools/Linux/xbmc.desktop b/tools/Linux/xbmc.desktop
+index e88f966..fe5b722 100644
+--- a/tools/Linux/xbmc.desktop
++++ b/tools/Linux/xbmc.desktop
+@@ -3,7 +3,7 @@ Version=1.0
+ Name=XBMC Media Center
+ GenericName=Media Center
+ Comment=Manage and view your media 
+-Exec=xbmc
++Exec=/opt/xbmc-fm-master/bin/xbmc
+ Icon=xbmc
+ Terminal=false
+ Type=Application
+diff --git a/xbmc/Application.cpp b/xbmc/Application.cpp
+index 8a0fe87..1cdd964 100644
+--- a/xbmc/Application.cpp
++++ b/xbmc/Application.cpp
+@@ -840,10 +840,10 @@ bool CApplication::InitDirectoriesLinux()
+    special://xbmc/          => [read-only] system directory (/usr/share/xbmc)
+    special://home/          => [read-write] user's directory that will override special://xbmc/ system-wide
+                                installations like skins, screensavers, etc.
+-                               ($HOME/.xbmc)
++                               ($HOME/.xbmc-fm-master)
+                                NOTE: XBMC will look in both special://xbmc/addons and special://home/addons for addons.
+    special://masterprofile/ => [read-write] userdata of master profile. It will by default be
+-                               mapped to special://home/userdata ($HOME/.xbmc/userdata)
++                               mapped to special://home/userdata ($HOME/.xbmc-fm-master/userdata)
+    special://profile/       => [read-write] current profile's userdata directory.
+                                Generally special://masterprofile for the master profile or
+                                special://masterprofile/profiles/<profile_name> for other profiles.
+@@ -895,10 +895,10 @@ bool CApplication::InitDirectoriesLinux()
+     // map our special drives
+     CSpecialProtocol::SetXBMCBinPath(xbmcBinPath);
+     CSpecialProtocol::SetXBMCPath(xbmcPath);
+-    CSpecialProtocol::SetHomePath(userHome + "/.xbmc");
+-    CSpecialProtocol::SetMasterProfilePath(userHome + "/.xbmc/userdata");
++    CSpecialProtocol::SetHomePath(userHome + "/.xbmc-fm-master");
++    CSpecialProtocol::SetMasterProfilePath(userHome + "/.xbmc-fm-master/userdata");
+ 
+-    CStdString strTempPath = URIUtils::AddFileToFolder(userHome, ".xbmc/temp");
++    CStdString strTempPath = URIUtils::AddFileToFolder(userHome, ".xbmc-fm-master/temp");
+     CSpecialProtocol::SetTempPath(strTempPath);
+ 
+     URIUtils::AddSlashAtEnd(strTempPath);
+@@ -978,9 +978,9 @@ bool CApplication::InitDirectoriesOSX()
+     #if defined(__arm__)
+       CStdString strTempPath = URIUtils::AddFileToFolder(userHome,  "Library/Preferences/XBMC/temp");
+     #else
+-      CStdString strTempPath = URIUtils::AddFileToFolder(userHome, ".xbmc/");
++      CStdString strTempPath = URIUtils::AddFileToFolder(userHome, ".xbmc-fm-master/");
+       CDirectory::Create(strTempPath);
+-      strTempPath = URIUtils::AddFileToFolder(userHome, ".xbmc/temp");
++      strTempPath = URIUtils::AddFileToFolder(userHome, ".xbmc-fm-master/temp");
+     #endif
+     CSpecialProtocol::SetTempPath(strTempPath);
+ 
+diff --git a/xbmc/filesystem/SpecialProtocol.h b/xbmc/filesystem/SpecialProtocol.h
+index 3375323..5d3154b 100644
+--- a/xbmc/filesystem/SpecialProtocol.h
++++ b/xbmc/filesystem/SpecialProtocol.h
+@@ -29,18 +29,18 @@
+ 
+  special://xbmc/          - the main XBMC folder (i.e. where the app resides).
+  special://home/          - a writeable version of the main XBMC folder
+-                             Linux: ~/.xbmc/
++                             Linux: ~/.xbmc-fm-master/
+                              OS X:  ~/Library/Application Support/XBMC/
+                              Win32: ~/Application Data/XBMC/
+  special://userhome/      - a writable version of the user home directory
+-                             Linux, OS X: ~/.xbmc
++                             Linux, OS X: ~/.xbmc-fm-master
+                              Win32: home directory of user
+  special://masterprofile/ - the master users userdata folder - usually special://home/userdata
+-                             Linux: ~/.xbmc/userdata/
++                             Linux: ~/.xbmc-fm-master/userdata/
+                              OS X:  ~/Library/Application Support/XBMC/UserData/
+                              Win32: ~/Application Data/XBMC/UserData/
+  special://profile/       - the current users userdata folder - usually special://masterprofile/profiles/<current_profile>
+-                             Linux: ~/.xbmc/userdata/profiles/<current_profile>
++                             Linux: ~/.xbmc-fm-master/userdata/profiles/<current_profile>
+                              OS X:  ~/Library/Application Support/XBMC/UserData/profiles/<current_profile>
+                              Win32: ~/Application Data/XBMC/UserData/profiles/<current_profile>
+ 
+-- 
+1.7.5.4
+
