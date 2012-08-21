@@ -4185,9 +4185,9 @@ CStdString CGUIInfoManager::GetVersion()
 {
   CStdString tmp;
   if (GetXbmcGitRevision())
-    tmp.Format("%d.%d%s Git:%s", VERSION_MAJOR, VERSION_MINOR, VERSION_TAG, GetXbmcGitRevision());
+    tmp.Format("%d.%d%s-fm+b Git:%s", VERSION_MAJOR, VERSION_MINOR, VERSION_TAG, GetXbmcGitRevision());
   else
-    tmp.Format("%d.%d%s", VERSION_MAJOR, VERSION_MINOR, VERSION_TAG);
+    tmp.Format("%d.%d%s-fm+b", VERSION_MAJOR, VERSION_MINOR, VERSION_TAG);
   return tmp;
 }
 
