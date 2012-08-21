@@ -4234,7 +4234,7 @@ std::string CGUIInfoManager::GetVersionShort(void)
   if (strlen(CCompileInfo::GetSuffix()) == 0)
     return StringUtils::Format("%d.%d", CCompileInfo::GetMajor(), CCompileInfo::GetMinor());
   else
-    return StringUtils::Format("%d.%d-%s", CCompileInfo::GetMajor(), CCompileInfo::GetMinor(), CCompileInfo::GetSuffix());
+    return StringUtils::Format("%d.%d-%s (fm+b)", CCompileInfo::GetMajor(), CCompileInfo::GetMinor(), CCompileInfo::GetSuffix());
 }
 
 CStdString CGUIInfoManager::GetVersion()
