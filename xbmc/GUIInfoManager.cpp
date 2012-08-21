@@ -4206,9 +4206,9 @@ CStdString CGUIInfoManager::GetVersion()
 {
   CStdString tmp;
   if (GetXbmcGitRevision())
-    tmp = StringUtils::Format("%d.%d%s Git:%s", VERSION_MAJOR, VERSION_MINOR, VERSION_TAG, GetXbmcGitRevision());
+    tmp = StringUtils::Format("%d.%d%s-fm+b Git:%s", VERSION_MAJOR, VERSION_MINOR, VERSION_TAG, GetXbmcGitRevision());
   else
-    tmp = StringUtils::Format("%d.%d%s", VERSION_MAJOR, VERSION_MINOR, VERSION_TAG);
+    tmp = StringUtils::Format("%d.%d%s-fm+b", VERSION_MAJOR, VERSION_MINOR, VERSION_TAG);
   return tmp;
 }
 
