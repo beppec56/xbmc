@@ -275,7 +275,8 @@ const infomap system_labels[] =  {{ "hasnetwork",       SYSTEM_ETHERNET_LINK_ACT
                                   { "alarmpos",         SYSTEM_ALARM_POS },
                                   { "isinhibit",        SYSTEM_ISINHIBIT },
                                   { "hasshutdown",      SYSTEM_HAS_SHUTDOWN },
-                                  { "haspvr",           SYSTEM_HAS_PVR }};
+                                  { "haspvr",           SYSTEM_HAS_PVR },
+                                  { "xbmccoreusage",    SYSTEM_XBMC_CORE_USAGE }};
 
 const infomap system_param[] =   {{ "hasalarm",         SYSTEM_HAS_ALARM },
                                   { "hascoreid",        SYSTEM_HAS_CORE_ID },
@@ -1511,7 +1512,12 @@ CStdString CGUIInfoManager::GetLabel(int info, int contextWindow, CStdString *fa
   case SYSTEM_CPU_USAGE:
     return GetSystemHeatInfo(info);
     break;
-
+  case SYSTEM_XBMC_CORE_USAGE:
+#if defined(_LINUX)
+    strLabel.Format("(CPU-XBMC %4.2f%%)", m_resourceCounter.GetCPUUsage());
+#endif
+    return strLabel;
+    break;
   case SYSTEM_VIDEO_ENCODER_INFO:
   case NETWORK_MAC_ADDRESS:
   case SYSTEM_KERNEL_VERSION:
@@ -4021,6 +4027,7 @@ string CGUIInfoManager::GetSystemHeatInfo(int info)
 #if defined(_LINUX)
     g_cpuInfo.getTemperature(m_cpuTemp);
     m_gpuTemp = GetGPUTemperature();
+    m_fanSpeed = GetCPUFanSpeed();
 #endif
   }
 
@@ -4037,7 +4044,10 @@ string CGUIInfoManager::GetSystemHeatInfo(int info)
       break;
     case LCD_FAN_SPEED:
     case SYSTEM_FAN_SPEED:
-      text.Format("%i%%", m_fanSpeed * 2);
+      if(m_fanSpeed == -1 )
+	text = "?";
+      else
+	text.Format("%i", m_fanSpeed );
       break;
     case SYSTEM_CPU_USAGE:
 #if defined(TARGET_DARWIN) || defined(_WIN32)
@@ -4048,6 +4058,26 @@ string CGUIInfoManager::GetSystemHeatInfo(int info)
       break;
   }
   return text;
+}
+
+int CGUIInfoManager::GetCPUFanSpeed()
+{
+  CStdString  cmd   = g_advancedSettings.m_cpuFanCmd;
+  int         value = 0,
+              ret   = 0;
+  char        scale = 0;
+  FILE        *p    = NULL;
+
+  if (cmd.IsEmpty() || !(p = popen(cmd.c_str(), "r")))
+    return -1;
+
+  ret = fscanf(p, "%d", &value);
+  pclose(p);
+
+  if (ret == 0)
+    return -1;
+
+  return value;
 }
 
 CTemperature CGUIInfoManager::GetGPUTemperature()
