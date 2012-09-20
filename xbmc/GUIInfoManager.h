@@ -36,6 +36,9 @@
 #include "interfaces/info/SkinVariable.h"
 #include "cores/IPlayer.h"
 
+#ifdef _LINUX
+#include "linux/LinuxResourceCounter.h"
+#endif
 #include <list>
 #include <map>
 
@@ -364,6 +367,7 @@ namespace INFO
 #define SKIN_HAS_THEME              606
 #define SKIN_ASPECT_RATIO           607
 
+#define SYSTEM_XBMC_CORE_USAGE      643
 #define SYSTEM_TOTAL_MEMORY         644
 #define SYSTEM_CPU_USAGE            645
 #define SYSTEM_USED_MEMORY_PERCENT  646
@@ -819,6 +823,7 @@ public:
   bool ToggleShowInfo() { m_playerShowInfo = !m_playerShowInfo; return m_playerShowInfo; };
 
   std::string GetSystemHeatInfo(int info);
+  int GetCPUFanSpeed();
   CTemperature GetGPUTemperature();
 
   void UpdateFPS();
@@ -965,6 +970,9 @@ protected:
   SPlayerAudioStreamInfo m_audioInfo;
 
   CCriticalSection m_critInfo;
+#ifdef _LINUX
+  CLinuxResourceCounter m_resourceCounter;
+#endif  
 };
 
 /*!
