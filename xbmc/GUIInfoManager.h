@@ -37,6 +37,9 @@
 #include "interfaces/info/SkinVariable.h"
 #include "cores/IPlayer.h"
 
+#ifdef _LINUX
+#include "linux/LinuxResourceCounter.h"
+#endif
 #include <list>
 #include <map>
 
@@ -197,6 +200,7 @@ public:
   bool IsPlayerChannelPreviewActive() const;
 
   std::string GetSystemHeatInfo(int info);
+  int GetCPUFanSpeed();
   CTemperature GetGPUTemperature();
 
   void UpdateFPS();
@@ -343,6 +347,9 @@ protected:
   SPlayerAudioStreamInfo m_audioInfo;
 
   CCriticalSection m_critInfo;
+#ifdef _LINUX
+  CLinuxResourceCounter m_resourceCounter;
+#endif  
 };
 
 /*!

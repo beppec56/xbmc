@@ -346,6 +346,7 @@ class CAdvancedSettings : public ISettingCallback, public ISettingsHandler
 
     std::string m_cpuTempCmd;
     std::string m_gpuTempCmd;
+    std::string m_cpuFanCmd;
 
     /* PVR/TV related advanced settings */
     int m_iPVRTimeCorrection;     /*!< @brief correct all times (epg tags, timer tags, recording tags) by this amount of minutes. defaults to 0. */
