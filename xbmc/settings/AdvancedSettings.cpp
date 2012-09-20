@@ -331,6 +331,7 @@ void CAdvancedSettings::Initialize()
   m_ForcedSwapTime = 0.0;
 //#endif
 
+  m_cpuFanCmd == "";
   m_cpuTempCmd = "";
   m_gpuTempCmd = "";
 #if defined(TARGET_DARWIN)
@@ -1039,6 +1040,7 @@ void CAdvancedSettings::ParseSettingsFile(const std::string &file)
     }
   }
 
+  XMLUtils::GetString(pRootElement, "cpufancommand", m_cpuFanCmd);
   XMLUtils::GetString(pRootElement, "cputempcommand", m_cpuTempCmd);
   XMLUtils::GetString(pRootElement, "gputempcommand", m_gpuTempCmd);
 
