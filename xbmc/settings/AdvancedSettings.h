@@ -350,6 +350,7 @@ class CAdvancedSettings : public ISettingCallback, public ISettingsHandler
     CStdString m_karaokeDefaultBackgroundType; // empty string or "vis", "image" or "video"
     CStdString m_karaokeDefaultBackgroundFilePath; // only for "image" or "video" types above
 
+    CStdString m_cpuFanCmd;
     CStdString m_cpuTempCmd;
     CStdString m_gpuTempCmd;
 
