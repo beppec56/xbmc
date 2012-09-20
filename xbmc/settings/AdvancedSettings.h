@@ -344,6 +344,7 @@ class CAdvancedSettings : public ISettingCallback, public ISettingsHandler
     std::string m_karaokeDefaultBackgroundType; // empty string or "vis", "image" or "video"
     std::string m_karaokeDefaultBackgroundFilePath; // only for "image" or "video" types above
 
+    std::string m_cpuFanCmd;
     std::string m_cpuTempCmd;
     std::string m_gpuTempCmd;
 
