@@ -9945,6 +9945,14 @@ msgctxt "#22011"
 msgid "CPU temperature:"
 msgstr "Temperatura CPU:"
 
+msgctxt "#220111"
+msgid "CPU fan:"
+msgstr "Ventola CPU:"
+
+msgctxt "#220112"
+msgid " rpm"
+msgstr " g/m"
+
 msgctxt "#22012"
 msgid "Total memory"
 msgstr "Memoria totale"
