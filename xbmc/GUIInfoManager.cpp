@@ -4162,10 +4162,18 @@ string CGUIInfoManager::GetSystemHeatInfo(int info)
       return m_gpuTemp.IsValid() ? m_gpuTemp.ToString() : "?";
       break;
     case SYSTEM_FAN_SPEED:
-      if(m_fanSpeed == -1 )
-	text = "?";
-      else
-	text = StringUtils::Format("%i", m_fanSpeed );
+      switch (m_fanSpeed) {
+      case -2:
+	text = " ";
+	break;
+      case -1:
+	text = StringUtils::Format(" %s %s %s ", g_localizeStrings.Get(220111).c_str(), "????", g_localizeStrings.Get(220112).c_str() );
+	break;
+      default:
+	//grab pre label
+	text = StringUtils::Format(" %s %i %s ", g_localizeStrings.Get(220111).c_str(), m_fanSpeed, g_localizeStrings.Get(220112).c_str() );
+	//grab post label
+      }
       break;
     case SYSTEM_CPU_USAGE:
 #if defined(TARGET_DARWIN_OSX)
@@ -4189,7 +4197,7 @@ int CGUIInfoManager::GetCPUFanSpeed()
   FILE        *p    = NULL;
 
   if (cmd.IsEmpty() || !(p = popen(cmd.c_str(), "r")))
-    return -1;
+    return -2; // no command
 
   ret = fscanf(p, "%d", &value);
   pclose(p);
