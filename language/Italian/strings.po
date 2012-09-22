@@ -9950,8 +9950,8 @@ msgid "CPU fan:"
 msgstr "Ventola CPU:"
 
 msgctxt "#220112"
-msgid " rpm"
-msgstr " g/m"
+msgid "rpm"
+msgstr "g/m"
 
 msgctxt "#22012"
 msgid "Total memory"

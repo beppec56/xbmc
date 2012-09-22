@@ -11903,7 +11903,7 @@ msgid "CPU fan:"
 msgstr ""
 
 msgctxt "#220112"
-msgid " rpm"
+msgid "rpm"
 msgstr ""
 
 msgctxt "#22012"
