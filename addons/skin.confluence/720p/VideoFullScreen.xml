@@ -38,7 +38,7 @@
 				<font>font12</font>
 				<textcolor>white</textcolor>
 				<shadowcolor>black</shadowcolor>
-				<label>$INFO[System.cputemperature,$LOCALIZE[22011] ]  $INFO[System.fanspeed,$LOCALIZE[220111],$LOCALIZE[220112] ]  $INFO[System.gputemperature,$LOCALIZE[22010] ]</label>
+				<label>$INFO[System.cputemperature,$LOCALIZE[22011] ]$INFO[System.fanspeed ]$INFO[System.gputemperature,$LOCALIZE[22010] ]</label>
 				<visible>[Player.ShowInfo | Window.IsActive(VideoOSD)]</visible>
 			</control>
 			<control type="label" id="1">
