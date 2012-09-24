@@ -157,8 +157,10 @@ void CGUIWindowSystemInfo::FrameMove()
     SET_CONTROL_LABEL(i++, g_sysinfo.GetCPURevision());
     SET_CONTROL_LABEL(i++, g_sysinfo.GetCPUSerial());
 #endif
-    SetControlLabel(i++, "%s %s", 22011, SYSTEM_CPU_TEMPERATURE);
-#if !defined(__arm__) || defined(TARGET_RASPBERRY_PI)
+    CStdString tmpStr;
+    tmpStr.Format("%s %s %s", g_localizeStrings.Get(22011).c_str(),g_infoManager.GetLabel(SYSTEM_CPU_TEMPERATURE).c_str(),g_infoManager.GetLabel(SYSTEM_FAN_SPEED).c_str());
+    SET_CONTROL_LABEL(i++, tmpStr);
+#if !defined(__arm__)
     SetControlLabel(i++, "%s %s", 13284, SYSTEM_CPUFREQUENCY);
 #endif
 #endif
