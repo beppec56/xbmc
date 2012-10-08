@@ -46,4 +46,5 @@ sudo apt-get install autoconf automake autopoint autotools-dev cmake curl \
   libvdpau-dev libvorbis-dev libxinerama-dev libxmu-dev libxrandr-dev \
   libxt-dev libyajl-dev lsb-release nasm python-dev \
   python-support unzip yasm zip zlib1g-dev libcap-dev \
-  libglew-dev swig openjdk-6-jdk mesa-utils
+  libglew-dev swig openjdk-6-jdk mesa-utils \
+  libssh-dev
