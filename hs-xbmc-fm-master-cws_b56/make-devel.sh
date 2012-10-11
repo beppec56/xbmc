@@ -13,6 +13,8 @@ echo "less $LOG_FILE"
 
 echo "`date +"%Y-%m-%d_%H%M%S"`" > "$LOG_FILE"
 
-make -j4 >> "$LOG_FILE" 2>&1
+BUILDTHREADS=$(grep -c processor /proc/cpuinfo)
+
+make -j${BUILDTHREADS} >> "$LOG_FILE" 2>&1
 
 echo "`date +"%Y-%m-%d_%H%M%S"`" >> "$LOG_FILE"
