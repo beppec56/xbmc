@@ -264,6 +264,11 @@ public:
   virtual int GetChapterCount() { return 0; }
 
   /*
+   * Set the playing time to get the correct current chapter
+   */
+  virtual void SetPlayerDts(double CurrentDts) {  }
+
+  /*
    * Get current chapter
    */
   virtual int GetChapter() { return 0; }

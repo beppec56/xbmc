@@ -2032,7 +2032,10 @@ void CDVDPlayer::HandleMessages()
           continue;
         }
 
-        if(!msg.GetTrickPlay())
+//needed here to do a correct seek to a chapter
+       if(m_pDemuxer)  m_pDemuxer->SetPlayerDts( DVD_MSEC_TO_TIME( GetTime() ) );
+
+       if(!msg.GetTrickPlay())
         {
           g_infoManager.SetDisplayAfterSeek(100000);
           if(msg.GetFlush())
@@ -3952,6 +3955,7 @@ void CDVDPlayer::UpdatePlayState(double timeout)
 
   if(m_pDemuxer)
   {
+    m_pDemuxer->SetPlayerDts( DVD_MSEC_TO_TIME( GetTime() ) );
     state.chapter       = m_pDemuxer->GetChapter();
     state.chapter_count = m_pDemuxer->GetChapterCount();
     m_pDemuxer->GetChapterName(state.chapter_name);
