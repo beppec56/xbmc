@@ -218,7 +218,6 @@ CDVDDemuxFFmpeg::CDVDDemuxFFmpeg() : CDVDDemux()
   m_program = UINT_MAX;
   m_pkt.result = -1;
   memset(&m_pkt.pkt, 0, sizeof(AVPacket));
-  SetPlayerDts(0);
 }
 
 CDVDDemuxFFmpeg::~CDVDDemuxFFmpeg()
@@ -244,7 +243,6 @@ bool CDVDDemuxFFmpeg::Open(CDVDInputStream* pInput)
   AVInputFormat* iformat = NULL;
   std::string strFile;
   m_iCurrentPts = DVD_NOPTS_VALUE;
-  SetPlayerDts(0);
   m_speed = DVD_PLAYSPEED_NORMAL;
   m_program = UINT_MAX;
   const AVIOInterruptCB int_cb = { interrupt_cb, this };
@@ -1552,14 +1550,15 @@ int CDVDDemuxFFmpeg::GetChapter()
   if(ich)
     return ich->GetChapter();
 
-  if(m_pFormatContext == NULL)
+  if(m_pFormatContext == NULL
+  || m_iCurrentPts == DVD_NOPTS_VALUE)
     return 0;
 
   for(unsigned i = 0; i < m_pFormatContext->nb_chapters; i++)
   {
     AVChapter *chapter = m_pFormatContext->chapters[i];
-    if(m_iPlayerCurrentDts >= ConvertTimestamp(chapter->start, chapter->time_base.den, chapter->time_base.num)
-    && m_iPlayerCurrentDts <  ConvertTimestamp(chapter->end,   chapter->time_base.den, chapter->time_base.num))
+    if(m_iCurrentPts >= ConvertTimestamp(chapter->start, chapter->time_base.den, chapter->time_base.num)
+    && m_iCurrentPts <  ConvertTimestamp(chapter->end,   chapter->time_base.den, chapter->time_base.num))
       return i + 1;
   }
 
