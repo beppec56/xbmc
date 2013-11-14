@@ -1712,7 +1712,7 @@ CStdString CGUIInfoManager::GetLabel(int info, int contextWindow, std::string *f
     break;
   case SYSTEM_XBMC_CORE_USAGE:
 #if defined(_LINUX)
-    strLabel.Format("(CPU-XBMC %4.2f%%)", m_resourceCounter.GetCPUUsage());
+    strLabel = StringUtils::Format("(CPU-XBMC %4.2f%%)", m_resourceCounter.GetCPUUsage());
 #endif
     return strLabel;
     break;
@@ -4223,7 +4223,7 @@ int CGUIInfoManager::GetCPUFanSpeed()
   char        scale = 0;
   FILE        *p    = NULL;
 
-  if (cmd.IsEmpty() || !(p = popen(cmd.c_str(), "r")))
+  if (cmd.empty() || !(p = popen(cmd.c_str(), "r")))
     return -2; // no command
 
   ret = fscanf(p, "%d", &value);
