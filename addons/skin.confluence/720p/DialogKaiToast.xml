@@ -48,8 +48,8 @@
 				<textcolor>grey2</textcolor>
 				<align>left</align>
 				<aligny>center</aligny>
-				<scrollout>false</scrollout>
-				<pauseatend>2000</pauseatend>
+				<scrollout>true</scrollout>
+				<pauseatend>500</pauseatend>
 			</control>
 		</control>
 	</controls>
