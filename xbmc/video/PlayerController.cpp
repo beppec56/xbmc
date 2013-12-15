@@ -52,7 +52,7 @@ CPlayerController::~CPlayerController()
 bool CPlayerController::OnAction(const CAction &action)
 {
   const unsigned int MsgTime = 300;
-  const unsigned int DisplTime = 2000;
+  const unsigned int DisplTime = 2000; //this display time equals the one formerly on the DialogKayToast.xml info window (id = 402)
 
   if (g_application.m_pPlayer->IsPlayingVideo())
   {
@@ -80,8 +80,9 @@ bool CPlayerController::OnAction(const CAction &action)
         }
         else
           sub = g_localizeStrings.Get(1223);
+	//rationale for displaytime below (exp sub.size() * 200 + 500) allocated 200 ms each string char+500 of display with a minimum of DisplTime ms
         CGUIDialogKaiToast::QueueNotification(CGUIDialogKaiToast::Info,
-                                              g_localizeStrings.Get(287), sub, DisplTime, false, MsgTime);
+                                              g_localizeStrings.Get(287), sub, std::max((unsigned int)(sub.size() * 200 + 500), DisplTime), false, MsgTime);
         return true;
       }
 
@@ -127,7 +128,7 @@ bool CPlayerController::OnAction(const CAction &action)
         }
         else
           sub = g_localizeStrings.Get(1223);
-        CGUIDialogKaiToast::QueueNotification(CGUIDialogKaiToast::Info, g_localizeStrings.Get(287), sub, DisplTime, false, MsgTime);
+        CGUIDialogKaiToast::QueueNotification(CGUIDialogKaiToast::Info, g_localizeStrings.Get(287), sub, std::max((unsigned int)(sub.size() * 200 + 500), DisplTime), false, MsgTime);
         return true;
       }
 
@@ -219,7 +220,7 @@ bool CPlayerController::OnAction(const CAction &action)
           aud = lan;
         else
           aud = StringUtils::Format("%s - %s", lan.c_str(), info.name.c_str());
-        CGUIDialogKaiToast::QueueNotification(CGUIDialogKaiToast::Info, g_localizeStrings.Get(460), aud, DisplTime, false, MsgTime);
+        CGUIDialogKaiToast::QueueNotification(CGUIDialogKaiToast::Info, g_localizeStrings.Get(460), aud, std::max((unsigned int)(aud.size() * 200 + 500), DisplTime), false, MsgTime);
         return true;
       }
 
