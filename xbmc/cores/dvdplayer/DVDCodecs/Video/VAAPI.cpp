@@ -24,15 +24,9 @@
 #include "DVDVideoCodec.h"
 #include <boost/scoped_array.hpp>
 #include <boost/weak_ptr.hpp>
-#include "utils/log.h"
-#include "threads/SingleLock.h"
 #include "XMemUtils.h"
 #include "utils/CPUInfo.h"
 #include "settings/Settings.h"
-
-extern "C" {
-#include "libavutil/avutil.h"
-}
 
 #define CACHED_BUFFER_SIZE 4096
 
@@ -512,8 +506,7 @@ int CDecoder::Decode(AVCodecContext* avctx, AVFrame* frame)
         return VC_ERROR;
       }
       CProcPic pic;
-      memset(&pic.frame, 0, sizeof(AVFrame));
-      av_frame_ref(&pic.frame, frame);
+      memcpy(&pic.frame, frame, sizeof(AVFrame));
       pic.surface = *it;
       m_surfaces_proc.push_back(pic);
       if (m_surfaces_proc.size() < m_renderbuffers_count)
@@ -686,9 +679,7 @@ bool CDecoder::MapFrame(AVCodecContext* avctx, AVFrame* frame)
     dst = m_frame_buffer + image.offsets[1];
     m_dllSSE4.copy_frame(src, dst, m_cache, image.width, image.height/2, image.pitches[1]);
 
-    av_frame_unref(frame);
-    av_frame_move_ref(frame, &pic.frame);
-
+    memcpy(frame, &pic.frame, sizeof(AVFrame));
     frame->format = AV_PIX_FMT_NV12;
     frame->data[0] = m_frame_buffer + image.offsets[0];
     frame->linesize[0] = image.pitches[0];

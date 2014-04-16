@@ -31,11 +31,6 @@
 #include <boost/shared_ptr.hpp>
 #include "linux/sse4/DllLibSSE4.h"
 
-extern "C" {
-#include "libavcodec/vaapi.h"
-#include "libavcodec/avcodec.h"
-}
-
 namespace VAAPI {
 
 typedef boost::shared_ptr<VASurfaceID const> VASurfacePtr;
