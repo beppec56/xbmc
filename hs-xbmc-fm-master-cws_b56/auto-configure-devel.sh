@@ -7,9 +7,9 @@
 
 #configure per prova
 #NOTA: abilitare asap codec richiede anche gdc, il compilatore 'D', a cosa serve ?
-./configure --prefix=/opt/xbmc-fm-master --disable-debug --enable-gl --disable-gles --enable-vdpau \
---disable-vaapi --disable-vdadecoder --disable-openmax --disable-tegra --disable-profiling \
---enable-joystick --enable-xrandr --disable-goom --disable-pulse --enable-rtmp --enable-ffmpeg-libvorbis \
---disable-mid --enable-hal --enable-avahi --disable-asap-codec --enable-webserver --enable-non-free \
+./configure --prefix=/opt/xbmc-fm-master --disable-libcec --disable-debug --enable-gl --disable-gles --enable-vdpau \
+--disable-vaapi --disable-openmax --disable-tegra --disable-profiling \
+--enable-joystick --enable-xrandr --disable-goom --disable-pulse --enable-rtmp  \
+--disable-mid --enable-avahi --disable-asap-codec --enable-webserver --enable-non-free \
 --disable-ccache \
 CFLAGS="" CXXFLAGS=""

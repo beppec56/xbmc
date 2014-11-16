@@ -13,6 +13,6 @@
 #--disable-mid --enable-hal --enable-avahi --disable-asap-codec --enable-webserver --enable-non-free \
 #--disable-ccache \
 
-./configure --prefix=/opt/xbmc --disable-debug --disable-pulse
+./configure --prefix=/opt/kodi --disable-libcec --disable-debug --disable-pulse
 
 CFLAGS="" CXXFLAGS=""
