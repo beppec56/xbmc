@@ -13,7 +13,7 @@
 #--disable-mid --enable-hal --enable-avahi --disable-asap-codec --enable-webserver --enable-non-free \
 #--disable-ccache \
 
-./configure --prefix=/opt/xbmc-fm-master --disable-debug --disable-pulse  --disable-crystalhd --disable-vaapi
+./configure --prefix=/opt/kodi-fm-master --disable-libcec --disable-debug --disable-pulse  --disable-vaapi
 
 #./configure --prefix=/opt/xbmc-fm-master --disable-debug --enable-pulse
 
