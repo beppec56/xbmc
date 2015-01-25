@@ -4335,7 +4335,7 @@ string CGUIInfoManager::GetSystemHeatInfo(int info)
 
 int CGUIInfoManager::GetCPUFanSpeed()
 {
-  CStdString  cmd   = g_advancedSettings.m_cpuFanCmd;
+  std::string cmd   = g_advancedSettings.m_cpuFanCmd;
   int         value = 0,
               ret   = 0;
   char        scale = 0;
