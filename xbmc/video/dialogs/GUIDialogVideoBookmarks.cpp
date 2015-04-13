@@ -295,8 +295,6 @@ void CGUIDialogVideoBookmarks::OnRefreshList()
     std::string chapterPath = StringUtils::Format("chapter://%s/%i", m_filePath.c_str(), i);
     std::string cachefile = CTextureCache::GetInstance().GetCachedPath(CTextureCache::GetInstance().GetCacheFile(chapterPath)+".jpg");
 
-    CLog::Log(LOGERROR, "CGUIDialogVideoBookmarks::OnRefreshList: file: %s, GetTotalTime: %ld, pos: %ld",cachefile.c_str(), g_application.m_pPlayer->GetTotalTime(), pos);
-    
     if (XFILE::CFile::Exists(cachefile))
       item->SetArt("thumb", cachefile);
     else if (i > m_jobsStarted && CSettings::GetInstance().GetBool(CSettings::SETTING_MYVIDEOS_EXTRACTCHAPTERTHUMBS))
@@ -312,8 +310,6 @@ void CGUIDialogVideoBookmarks::OnRefreshList()
 	//last chapter
 	thumbnailTime += ( g_application.m_pPlayer->GetTotalTime()/1000 - pos )/2;
 
-      CLog::Log(LOGERROR, "CGUIDialogVideoBookmarks::OnRefreshList: GetTotalTime: %ld, pos: %ld, thumbnailTime: %ld ",
-		g_application.m_pPlayer->GetTotalTime(), pos,thumbnailTime);
       CJob* job = new CThumbExtractor(item, m_filePath, true, chapterPath, thumbnailTime * 1000, false);
       AddJob(job);
       m_mapJobsChapter[job] = i;
