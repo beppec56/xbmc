@@ -293,12 +293,20 @@ void CGUIDialogVideoBookmarks::OnRefreshList()
 
     std::string chapterPath = StringUtils::Format("chapter://%s/%i", m_filePath.c_str(), i);
     std::string cachefile = CTextureCache::Get().GetCachedPath(CTextureCache::Get().GetCacheFile(chapterPath)+".jpg");
+
     if (XFILE::CFile::Exists(cachefile))
       item->SetArt("thumb", cachefile);
     else if (i > m_jobsStarted && CSettings::Get().GetBool("myvideos.extractchapterthumbs"))
     {
       CFileItem item(m_filePath, false);
-      CJob* job = new CThumbExtractor(item, m_filePath, true, chapterPath, pos * 1000, false);
+
+      int64_t nextChapterTime = ( i != g_application.m_pPlayer->GetChapterCount() ) ?
+	g_application.m_pPlayer->GetChapterPos(i+1)*1000 :
+	g_application.m_pPlayer->GetTotalTime();
+
+      int64_t thumbnailBias = (nextChapterTime > 3000) ? 3000 : 0;
+
+      CJob* job = new CThumbExtractor(item, m_filePath, true, chapterPath, ( pos * 1000 ) + thumbnailBias, false);
       AddJob(job);
       m_mapJobsChapter[job] = i;
       m_jobsStarted++;
