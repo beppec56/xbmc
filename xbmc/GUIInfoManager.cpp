@@ -305,8 +305,7 @@ const infomap system_labels[] =  {{ "hasnetwork",       SYSTEM_ETHERNET_LINK_ACT
                                   { "haspvr",           SYSTEM_HAS_PVR },
                                   { "startupwindow",    SYSTEM_STARTUP_WINDOW },
                                   { "stereoscopicmode", SYSTEM_STEREOSCOPIC_MODE },
-                                  { "hasadsp",          SYSTEM_HAS_ADSP },
-                                  { "xbmccoreusage",    SYSTEM_XBMC_CORE_USAGE }};
+                                  { "hasadsp",          SYSTEM_HAS_ADSP }};
 
 const infomap system_param[] =   {{ "hasalarm",         SYSTEM_HAS_ALARM },
                                   { "hascoreid",        SYSTEM_HAS_CORE_ID },
@@ -1896,12 +1895,6 @@ std::string CGUIInfoManager::GetLabel(int info, int contextWindow, std::string *
   case SYSTEM_FAN_SPEED:
   case SYSTEM_CPU_USAGE:
     return GetSystemHeatInfo(info);
-    break;
-  case SYSTEM_XBMC_CORE_USAGE:
-#if defined(_LINUX)
-    strLabel = StringUtils::Format("(CPU-XBMC %4.2f%%)", m_resourceCounter.GetCPUUsage());
-#endif
-    return strLabel;
     break;
   case SYSTEM_VIDEO_ENCODER_INFO:
   case NETWORK_MAC_ADDRESS:

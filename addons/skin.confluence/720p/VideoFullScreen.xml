@@ -52,7 +52,7 @@
 				<font>font12</font>
 				<textcolor>white</textcolor>
 				<shadowcolor>black</shadowcolor>
-				<label>$INFO[System.cpuusage,$LOCALIZE[13271] ] $INFO[System.xbmccoreusage]</label>
+				<label>$INFO[System.cpuusage,$LOCALIZE[13271] ]</label>
 				<visible>[Player.ShowInfo | Window.IsActive(VideoOSD)]</visible>
 			</control>
 			<control type="label" id="1">
