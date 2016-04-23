@@ -772,6 +772,11 @@ void CDVDPlayerVideo::Process()
 
   // we need to let decoder release any picture retained resources.
   m_pVideoCodec->ClearPicture(&picture);
+  //log max bitrate obtained
+  CLog::Log(LOGNOTICE, "%s.%s:%d - Max bitrate: %2.2f Mb/s Dropped %d",
+	    __FILE__, __FUNCTION__, __LINE__,
+            m_videoStats.GetMaxBitrate() / (1024.0*1024.0), m_iDroppedFrames);
+  m_videoStats.ResetMaxBitrate();
 }
 
 void CDVDPlayerVideo::OnExit()
@@ -1222,7 +1227,8 @@ std::string CDVDPlayerVideo::GetPlayerInfo()
   s << "fr:"     << std::fixed << std::setprecision(3) << m_fFrameRate;
   s << ", vq:"   << std::setw(2) << std::min(99,GetLevel()) << "%";
   s << ", dc:"   << m_codecname;
-  s << ", Mb/s:" << std::fixed << std::setprecision(2) << (double)GetVideoBitrate() / (1024.0*1024.0);
+  s << ", Mb/s:" << std::setw(2) << std::fixed << std::setprecision(2) << (double)GetVideoBitrate() / (1024.0*1024.0);
+  s << "<"       << std::setw(5) << std::fixed << std::setprecision(2) << (double)m_videoStats.GetMaxBitrate() / (1024.0*1024.0);
   s << ", drop:" << m_iDroppedFrames;
   s << ", skip:" << g_renderManager.GetSkippedFrames();
 
