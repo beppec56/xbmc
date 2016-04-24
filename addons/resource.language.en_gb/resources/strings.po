@@ -13027,6 +13027,16 @@ msgid "CPU temperature:"
 msgstr ""
 
 #: xbmc/windows/GUIWindowSystemInfo.cpp
+msgctxt "#220111"
+msgid "CPU fan:"
+msgstr ""
+
+#: xbmc/windows/GUIWindowSystemInfo.cpp
+msgctxt "#220112"
+msgid "rpm"
+msgstr ""
+
+#: xbmc/windows/GUIWindowSystemInfo.cpp
 msgctxt "#22012"
 msgid "Total memory"
 msgstr ""
