@@ -333,6 +333,7 @@ class CAdvancedSettings : public ISettingCallback, public ISettingsHandler
     bool m_bAllowDeferredRendering;
 
     std::string m_cpuTempCmd;
+    std::string m_cpuFanCmd;
     std::string m_gpuTempCmd;
 
     /* PVR/TV related advanced settings */

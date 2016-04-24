@@ -4711,6 +4711,7 @@ std::string CGUIInfoManager::GetSystemHeatInfo(int info)
     m_lastSysHeatInfoTime = CTimeUtils::GetFrameTime();
 #if defined(TARGET_POSIX)
     g_cpuInfo.getTemperature(m_cpuTemp);
+    m_fanSpeed = GetCPUFanSpeed();
     m_gpuTemp = GetGPUTemperature();
 #endif
   }
@@ -4725,7 +4726,18 @@ std::string CGUIInfoManager::GetSystemHeatInfo(int info)
       return m_gpuTemp.IsValid() ? g_langInfo.GetTemperatureAsString(m_gpuTemp) : "?";
       break;
     case SYSTEM_FAN_SPEED:
-      text = StringUtils::Format("%i%%", m_fanSpeed * 2);
+      switch (m_fanSpeed) {
+      case -2:
+	text = " ";
+	break;
+      case -1:
+	text = StringUtils::Format(" %s %s %s ", g_localizeStrings.Get(220111).c_str(), "????", g_localizeStrings.Get(220112).c_str() );
+	break;
+      default:
+	//grab pre label
+	text = StringUtils::Format(" %s %i %s ", g_localizeStrings.Get(220111).c_str(), m_fanSpeed, g_localizeStrings.Get(220112).c_str() );
+	//grab post label
+      }
       break;
     case SYSTEM_CPU_USAGE:
 #if defined(TARGET_DARWIN_OSX)
@@ -4738,6 +4750,26 @@ std::string CGUIInfoManager::GetSystemHeatInfo(int info)
       break;
   }
   return text;
+}
+
+int CGUIInfoManager::GetCPUFanSpeed()
+{
+  std::string cmd   = g_advancedSettings.m_cpuFanCmd;
+  int         value = 0,
+              ret   = 0;
+  char        scale = 0;
+  FILE        *p    = NULL;
+
+  if (cmd.empty() || !(p = popen(cmd.c_str(), "r")))
+    return -1;
+
+  ret = fscanf(p, "%d", &value);
+  pclose(p);
+
+  if (ret == 0)
+    return -1;
+
+  return value;
 }
 
 CTemperature CGUIInfoManager::GetGPUTemperature()

@@ -196,6 +196,7 @@ public:
   bool IsPlayerChannelPreviewActive() const;
 
   std::string GetSystemHeatInfo(int info);
+  int GetCPUFanSpeed();
   CTemperature GetGPUTemperature();
 
   void UpdateFPS();

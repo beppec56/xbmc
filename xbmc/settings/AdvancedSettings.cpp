@@ -328,6 +328,7 @@ void CAdvancedSettings::Initialize()
 //#endif
 
   m_cpuTempCmd = "";
+  m_cpuFanCmd == "";
   m_gpuTempCmd = "";
 #if defined(TARGET_DARWIN)
   // default for osx is fullscreen always on top
@@ -1017,6 +1018,7 @@ void CAdvancedSettings::ParseSettingsFile(const std::string &file)
   }
 
   XMLUtils::GetString(pRootElement, "cputempcommand", m_cpuTempCmd);
+  XMLUtils::GetString(pRootElement, "cpufancommand", m_cpuFanCmd);
   XMLUtils::GetString(pRootElement, "gputempcommand", m_gpuTempCmd);
 
   XMLUtils::GetBoolean(pRootElement, "alwaysontop", m_alwaysOnTop);
