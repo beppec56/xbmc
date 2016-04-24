@@ -426,6 +426,10 @@ void CGUIWindowFullScreen::FrameMove()
       double refreshrate;
       double clockspeed;
       std::string strClock;
+      std::string strCPUTemp = g_infoManager.GetSystemHeatInfo(SYSTEM_CPU_TEMPERATURE);
+      std::string strCPUFan  = g_infoManager.GetSystemHeatInfo(SYSTEM_FAN_SPEED);
+      std::string strGPUTemp = g_infoManager.GetSystemHeatInfo(SYSTEM_GPU_TEMPERATURE);
+      
 
       if (g_VideoReferenceClock.GetClockInfo(missedvblanks, clockspeed, refreshrate))
         strClock = StringUtils::Format("S( refresh:%.3f missed:%i speed:%+.3f%% %s )"
@@ -434,9 +438,11 @@ void CGUIWindowFullScreen::FrameMove()
                                        , clockspeed - 100.0
                                        , g_renderManager.GetVSyncState().c_str());
 
-      strGeneralFPS = StringUtils::Format("%s\nW( %s )\n%s"
+      strGeneralFPS = StringUtils::Format("%s\nW( %s )\nT(CPU:%s %s GPU:%s)\n%s"
                                           , strGeneral.c_str()
-                                          , strCores.c_str(), strClock.c_str() );
+                                          , strCores.c_str()
+					  , strCPUTemp.c_str(), strCPUFan.c_str(), strGPUTemp.c_str()
+					  , strClock.c_str() );
 
       CGUIMessage msg(GUI_MSG_LABEL_SET, GetID(), LABEL_ROW3);
       msg.SetLabel(strGeneralFPS);
