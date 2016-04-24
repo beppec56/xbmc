@@ -105,7 +105,7 @@
 static CLinuxResourceCounter m_resourceCounter;
 #endif
 
-#define SYSHEATUPDATEINTERVAL 60000
+#define SYSHEATUPDATEINTERVAL 30000
 
 using namespace XFILE;
 using namespace MUSIC_INFO;
