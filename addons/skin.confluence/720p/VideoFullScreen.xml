@@ -11,7 +11,7 @@
 				<left>-20</left>
 				<top>-150</top>
 				<width>1320</width>
-				<height>256</height>
+				<height>296</height>
 				<texture flipy="true" border="1">HomeNowPlayingBack.png</texture>
 			</control>
 			<control type="label" id="1">
@@ -27,6 +27,20 @@
 				<shadowcolor>black</shadowcolor>
 				<label>$INFO[Player.Chapter,$LOCALIZE[21396]: ]$INFO[Player.ChapterCount, / ]$INFO[Player.ChapterName,[COLOR=grey] - (,)[/COLOR]]</label>
 				<visible>Player.ChapterCount + !VideoPlayer.Content(LiveTV)</visible>
+			</control>
+ 			<control type="label" id="1">
+				<description>Hardware System Heat Information</description>
+				<posx>30</posx>
+				<posy>30</posy>
+				<width>1000</width>
+				<height>20</height>
+				<align>left</align>
+				<aligny>center</aligny>
+				<font>font12</font>
+				<textcolor>white</textcolor>
+				<shadowcolor>black</shadowcolor>
+				<label>$INFO[System.cputemperature,$LOCALIZE[22011] ]$INFO[System.fanspeed]$INFO[System.gputemperature,$LOCALIZE[22010] ]</label>
+				<visible>[Player.ShowInfo | Window.IsActive(VideoOSD)]</visible>
 			</control>
 			<control type="label" id="1">
 				<description>Channel Group label</description>
